@@ -34,6 +34,7 @@ app.mount("/lens_image_folder", StaticFiles(directory="lens_image_folder"), name
 def get_db_connection():
     return mysql.connector.connect(
         host=os.getenv("DB_HOST"),
+        port=int(os.getenv("DB_PORT")),   # Railway requires explicit port
         user=os.getenv("DB_USER"),
         password=os.getenv("DB_PASSWORD"),
         database=os.getenv("DB_NAME")
