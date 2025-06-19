@@ -18,7 +18,9 @@ client = openai.OpenAI(api_key = os.getenv("OPENAI_API_KEY"))
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # OR use ["http://localhost:5500"] for stricter setup
+    allow_origins=[
+        "https://elegant-swan-810e36.netlify.app",  # ✅ Add your Netlify frontend domain
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
