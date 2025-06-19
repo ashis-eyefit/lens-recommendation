@@ -90,14 +90,11 @@ async def recommend_lens(payload: LensRequest):
             result = json.loads(content)
             # fallback image logic
             lens_slug, coating_slug = resolve_dual_static_images(lens_file_name=result["lens_file_name"], coating_file_name=result["coating_file_name"])
-            print(f";;;;;;;;;;;;;;;;;;;;;;;;;;;;;{lens_slug} and  {coating_slug}")
             # Try all sources
             result["lens_image_url"] = f"http://localhost:8002{lens_slug}"
             result["coating_image_url"] = f"http://localhost:8002{coating_slug}"
-            # Ensure full URL with host and port
+            
 
-            print("?????????????????????????????????????????????????????????????????????")
-            print(result)
 
         except Exception as e:
             result = {
@@ -109,9 +106,9 @@ async def recommend_lens(payload: LensRequest):
             }
 
         #### debugging
-        print(result["lens_image_url"])
-        print("================")
-        print(result["coating_image_url"])
+        #print(result["lens_image_url"])
+        #print("================")
+        #print(result["coating_image_url"])
 
         insert_response = """
             INSERT INTO lens_recommendation_response (
