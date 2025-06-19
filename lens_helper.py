@@ -2,8 +2,8 @@ import os
 
 def resolve_dual_static_images(lens_file_name: str, coating_file_name: str):
 
-    lens_image = f"/backend/lens_image_folder/{lens_file_name}"
-    coating_image = f"/backend/lens_image_folder/{coating_file_name}"
+    lens_image = f"/lens_image_folder/{lens_file_name}"
+    coating_image = f"/lens_image_folder/{coating_file_name}"
 
     return lens_image, coating_image
 

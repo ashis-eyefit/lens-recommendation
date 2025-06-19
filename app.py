@@ -3,8 +3,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
-from backend.lens_schema import LensRequest, LensResponse
-from backend.lens_helper import generate_user_prompt, generate_system_prompt, resolve_dual_static_images
+from lens_schema import LensRequest, LensResponse
+from lens_helper import generate_user_prompt, generate_system_prompt, resolve_dual_static_images
 import mysql.connector
 import openai
 import os
@@ -25,8 +25,8 @@ app.add_middleware(
 )
 
 # === Serve lens and coating images statically ===
-app.mount("/lens_image_folder", StaticFiles(directory="backend/lens_image_folder"), name="lens_file_name")
-app.mount("/lens_image_folder", StaticFiles(directory="backend/lens_image_folder"), name="coating_file_name")
+app.mount("/lens_image_folder", StaticFiles(directory="lens_image_folder"), name="lens_file_name")
+app.mount("/lens_image_folder", StaticFiles(directory="lens_image_folder"), name="coating_file_name")
 
 # === MySQL Connection ===
 def get_db_connection():
