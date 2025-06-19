@@ -505,34 +505,34 @@
         
 
         // Save lens image URLs globally for toggle function
-window.latestLensImageURL_main = result.lens_image_url;
-window.latestLensImageURL_coating = result.coating_image_url;
+        window.latestLensImageURL_main = result.lens_image_url;
+        window.latestLensImageURL_coating = result.coating_image_url;
 
 
 
-// Render textual result only (not images yet)
-document.getElementById("result").style.display = "block";
-document.getElementById("result").innerHTML = `
-  <h3>🎯 Recommended Lens: ${result.lens_name}</h3>
-  <p><strong>Description:</strong>${bulletToList(result.description)}</p>
-  <p><strong>Benefits:</strong>${bulletToList(result.benefits)}</p>
-  <button onclick="toggleImage()" style="margin-top: 10px;">🖼️ Show Lens Image</button>
-  <div id="lensImageContainer" style="display: none; margin-top: 15px;">
-    <div>
-      <h3> Lens Image </h3>
-      <img id="lensImageMain" src="" alt="Main Lens" style="max-width: 240px; margin-right: 20px; border-radius: 6px;">
-    </div>
-    <div>
-      <h3>Coating Style (Transparent)</h3>
-      <img id="lensImageCoating" src="" alt="Coating" style="max-width: 240px; border-radius: 6px;">
-    </div>
-  </div>
-`;
+        // Render textual result only (not images yet)
+        document.getElementById("result").style.display = "block";
+        document.getElementById("result").innerHTML = `
+          <h3>🎯 Recommended Lens: ${result.lens_name}</h3>
+          <p><strong>Description:</strong>${bulletToList(result.description)}</p>
+          <p><strong>Benefits:</strong>${bulletToList(result.benefits)}</p>
+          <button onclick="toggleImage()" style="margin-top: 10px;">🖼️ Show Lens Image</button>
+          <div id="lensImageContainer" style="display: none; margin-top: 15px;">
+            <div>
+              <h3> Lens Image </h3>
+              <img id="lensImageMain" src="" alt="Main Lens" style="max-width: 240px; margin-right: 20px; border-radius: 6px;">
+            </div>
+            <div>
+              <h3>Coating Style (Transparent)</h3>
+              <img id="lensImageCoating" src="" alt="Coating" style="max-width: 240px; border-radius: 6px;">
+            </div>
+          </div>
+        `;
 
 
 
-      //////////DEBUGGING PART
-      console.log("Trying to show image from:", window.latestLensImageURL);
+          //////////DEBUGGING PART
+          console.log("Trying to show image from:", window.latestLensImageURL);
 
 
         statusDiv.innerHTML = "✅ Recommendation generated successfully.";
@@ -546,24 +546,24 @@ document.getElementById("result").innerHTML = `
     });
     });
 
-  function toggleImage() {
-  const container = document.getElementById("lensImageContainer");
-  const imgMain = document.getElementById("lensImageMain");
-  const imgCoating = document.getElementById("lensImageCoating");
+      function toggleImage() {
+      const container = document.getElementById("lensImageContainer");
+      const imgMain = document.getElementById("lensImageMain");
+      const imgCoating = document.getElementById("lensImageCoating");
 
-  container.style.display = "block";
-  imgMain.src = window.latestLensImageURL_main;
-  imgCoating.src = window.latestLensImageURL_coating;
-}
-// Utility to convert 🔵 bullet text string into HTML list
-function bulletToList(text) {
-  return `<ul>` + text
-    .split('🔵')
-    .map(item => item.trim())
-    .filter(Boolean)
-    .map(item => `<li>🔵 ${item}</li>`)
-    .join('') + `</ul>`;
-}
+      container.style.display = "block";
+      imgMain.src = window.latestLensImageURL_main;
+      imgCoating.src = window.latestLensImageURL_coating;
+    }
+    // Utility to convert 🔵 bullet text string into HTML list
+    function bulletToList(text) {
+      return `<ul>` + text
+        .split('🔵')
+        .map(item => item.trim())
+        .filter(Boolean)
+        .map(item => `<li>🔵 ${item}</li>`)
+        .join('') + `</ul>`;
+    }
 
 </script>
 </body>
