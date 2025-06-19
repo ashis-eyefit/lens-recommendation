@@ -43,18 +43,19 @@ def get_db_connection():
 # === API Route ===
 @app.post("/recommend", response_model=LensResponse)
 async def recommend_lens(payload: LensRequest):
-    conn = get_db_connection()
-    cursor = conn.cursor()
+    #conn = get_db_connection()
+    #cursor = conn.cursor()
 
     try:
-        insert_query = """
+        """
+        insert_query = 
             INSERT INTO lens_recommendation_user_data (
                 name, age, contact_number, email_id, uses_glasses, consultation_freq, symptoms,
                 sleep_hours, hydration, screen_time, screen_break_time,
                 dark_mode, brightness, reading_time, outdoor_time,
                 diagnosed_conditions, family_history, preferences
             ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-        """
+        
         cursor.execute(insert_query, (
             payload.name,
             payload.age,
@@ -77,7 +78,7 @@ async def recommend_lens(payload: LensRequest):
         ))
         conn.commit()
         form_id = cursor.lastrowid
-
+        """
         user_prompt = generate_user_prompt(payload)
         system_prompt = generate_system_prompt()
         gpt_output = client.chat.completions.create(
@@ -113,11 +114,11 @@ async def recommend_lens(payload: LensRequest):
         #print("================")
         #print(result["coating_image_url"])
 
-        insert_response = """
+        """insert_response = 
             INSERT INTO lens_recommendation_response (
                 form_id, lens_name, description, benefits
             ) VALUES (%s, %s, %s, %s)
-        """
+        
         cursor.execute(insert_response, (
             form_id,
             result['lens_name'],
@@ -125,15 +126,15 @@ async def recommend_lens(payload: LensRequest):
             result['benefits']
         ))
         conn.commit()
-
+        """
     except Exception as e:
         return {
-            "image_url": "Faile to generate image",
+            "image_url": "Fail to generate image",
             "description": "Failed to generate lens recommendation.",
             "error": str(e)
         }
-    finally:
+    """finally:
         cursor.close()
         conn.close()
-
+"""
     return result
