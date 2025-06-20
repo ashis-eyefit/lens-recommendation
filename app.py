@@ -19,7 +19,7 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://elegant-swan-810e36.netlify.app",  # ✅ Add your Netlify frontend domain
+        "https://elegant-swan-810e36.netlify.app",  # ✅ Adding Netlify frontend domain
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -27,8 +27,8 @@ app.add_middleware(
 )
 
 # === Serve lens and coating images statically ===
-app.mount("/lens_image_folder", StaticFiles(directory="lens_image_folder"), name="lens_file_name")
-app.mount("/lens_image_folder", StaticFiles(directory="lens_image_folder"), name="coating_file_name")
+app.mount("/lens_image_folder", StaticFiles(directory="lens_image_folder"), name="lens_image")
+
 
 # === MySQL Connection ===
 def get_db_connection():
@@ -95,16 +95,16 @@ async def recommend_lens(payload: LensRequest):
             # fallback image logic
             lens_slug, coating_slug = resolve_dual_static_images(lens_file_name=result["lens_file_name"], coating_file_name=result["coating_file_name"])
             # Try all sources
-            result["lens_image_url"] = f"http://localhost:8002{lens_slug}"
-            result["coating_image_url"] = f"http://localhost:8002{coating_slug}"
+            result["lens_image_url"] = f"https://lens-recommendation.onrender.com{lens_slug}"
+            result["coating_image_url"] = f"https://lens-recommendation.onrender.com{coating_slug}"
             
 
 
         except Exception as e:
             result = {
                 "lens_name": result["lens_name"],
-                "lens_image_url": "http://localhost:8002/backend/lens_image_folder/Normal_Lens.jpg",
-                "coating_image_url":"http://localhost:8002/backend/lens_image_folder/Blue_Light_Protection.jpg",
+                "lens_image_url": "https://lens-recommendation.onrender.com/lens_image_folder/Normal_Lens.jpg",
+                "coating_image_url":"https://lens-recommendation.onrender.com/lens_image_folder/Blue_Light_Protection.jpg",
                 "description":result["description"],
                 "benefits": result["benefits"]
             }
