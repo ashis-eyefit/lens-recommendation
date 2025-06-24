@@ -52,10 +52,10 @@ def generate_system_prompt():
             "lens_name": "Progressive Anti Reflective Lens",
             "lens_file_name": "Progressive_Lens.jpg",
             "coating_file_name": "Anti_Reflective.jpg",
-            "description": "🔵 Progressive lenses offer seamless focus at all distances 
-                            🔵 ideal for age-related focus changes.",
-            "benefits": "🔵 No need for multiple glasses
-                         🔵 Natural transition for near to far
-                         🔵 Anti-reflective coating improves night driving"
+            "description": "- Progressive lenses offer seamless focus at all distances 
+                            - ideal for age-related focus changes.",
+            "benefits": "- No need for multiple glasses
+                         - Natural transition for near to far
+                         - Anti-reflective coating improves night driving"
             }}
         """
