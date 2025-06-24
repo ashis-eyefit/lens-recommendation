@@ -46,7 +46,7 @@ def generate_system_prompt():
         - Keep image filenames exactly as shown. Case-sensitive. No spaces.
         - Make point wise output and use new line with bullet point for each section benefits and explanation.
         - return only one most prior relevant file name for each of  len_file_name and coating_file_name
-        - Respond only with JSON — no explanations or extra text outside the code block and do not hallucinate.
+        - Respond only with strict JSON — no explanations or extra text outside the code block and do not hallucinate.
         - Output Example:
             {{
             "lens_name": "Progressive Anti Reflective Lens",
