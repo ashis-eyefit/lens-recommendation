@@ -87,7 +87,7 @@ async def recommend_lens(payload: LensRequest):
                 {"role": "user", "content": user_prompt},
             ],
             temperature=0.7,
-            response_format="json"
+          
         )
         content = gpt_output.choices[0].message.content.strip()
         try:
