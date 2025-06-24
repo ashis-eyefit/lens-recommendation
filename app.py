@@ -91,8 +91,10 @@ async def recommend_lens(payload: LensRequest):
         )
         content = gpt_output.choices[0].message.content.strip()
         try:
-            print("🔍 GPT Response:", content)
+            import re
+            content = re.sub(r'(?<!\\)\n', r'\\n', content)
             result = json.loads(content)
+            print("🔍 GPT Response:", content)
             # fallback image logic
             lens_slug, coating_slug = resolve_dual_static_images(lens_file_name=result["lens_file_name"], coating_file_name=result["coating_file_name"])
             # Try all sources
