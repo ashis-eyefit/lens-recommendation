@@ -19,8 +19,8 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-         "*"     
-    ], #"https://elegant-swan-810e36.netlify.app",  # Adding Netlify frontend domain
+         "https://eyefit-lens-recommendation.netlify.app/." 
+     ],                                                          # Adding Netlify frontend domain
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
