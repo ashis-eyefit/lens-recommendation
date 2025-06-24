@@ -92,23 +92,27 @@ async def recommend_lens(payload: LensRequest):
         content = gpt_output.choices[0].message.content.strip()
         try:
             import re
-            # STEP 1: Remove markdown ```json or ``` wrappers
+            # STEP 1: Remove ```json or ``` wrappers
             if content.startswith("```json"):
-                content = content.replace("```json", "").strip("```").strip()
+                content = content.replace("```json", "").strip("`").strip()
             elif content.startswith("```"):
-                content = content.strip("```").strip()
+                content = content.strip("`").strip()
 
-            # STEP 2: Remove extra indentation (optional, improves parsing robustness)
+            # STEP 2: Remove leading indentation
             content = re.sub(r'^\s+', '', content, flags=re.MULTILINE)
 
-            # STEP 3: Sanitize newlines ONLY inside JSON string values (conservatively)
-            # Don't double-escape already escaped \n
-            content = re.sub(r'(?<!\\)\\n', r'\\n', content)
+            # STEP 3: Escape all raw newlines between quotes (💡 safest)
+            def escape_newlines_in_strings(text):
+                def replacer(match):
+                    return match.group(0).replace('\n', '\\n')
+                return re.sub(r'"(.*?)"', replacer, text, flags=re.DOTALL)
 
-            # Debug before parsing
+            content = escape_newlines_in_strings(content)
+
+            # STEP 4: Debug
             print("🧼 Final cleaned content before JSON parse:\n", content)
 
-            # STEP 4: Parse JSON
+            # STEP 5: Parse
             result = json.loads(content)
             # fallback image logic
             lens_slug, coating_slug = resolve_dual_static_images(lens_file_name=result["lens_file_name"], coating_file_name=result["coating_file_name"])
