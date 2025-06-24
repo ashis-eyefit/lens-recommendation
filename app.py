@@ -92,19 +92,23 @@ async def recommend_lens(payload: LensRequest):
         content = gpt_output.choices[0].message.content.strip()
         try:
             import re
-            # Step 1: Clean markdown code block wrappers
+            # STEP 1: Remove markdown ```json or ``` wrappers
             if content.startswith("```json"):
-                content = content.strip("```json").strip("```")
+                content = content.replace("```json", "").strip("```").strip()
             elif content.startswith("```"):
                 content = content.strip("```").strip()
 
-            # Step 2: Replace unescaped newlines inside strings
-            content = re.sub(r'(?<!\\)\n', r'\\n', content)
+            # STEP 2: Remove extra indentation (optional, improves parsing robustness)
+            content = re.sub(r'^\s+', '', content, flags=re.MULTILINE)
 
-            # Step 3: Optional debug log
-            print("🧼 Cleaned GPT content:", content)
+            # STEP 3: Sanitize newlines ONLY inside JSON string values (conservatively)
+            # Don't double-escape already escaped \n
+            content = re.sub(r'(?<!\\)\\n', r'\\n', content)
 
-            # Step 4: Try parsing JSON
+            # Debug before parsing
+            print("🧼 Final cleaned content before JSON parse:\n", content)
+
+            # STEP 4: Parse JSON
             result = json.loads(content)
             # fallback image logic
             lens_slug, coating_slug = resolve_dual_static_images(lens_file_name=result["lens_file_name"], coating_file_name=result["coating_file_name"])
