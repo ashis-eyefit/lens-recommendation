@@ -19,7 +19,6 @@ class LensRequest(BaseModel):
     outdoorTime: float
     diagnosedConditions: Optional[List[str]]
     familyHistory: Optional[List[str]]
-    preferences: Optional[List[str]]
 
 class LensResponse(BaseModel):
     lens_name: str

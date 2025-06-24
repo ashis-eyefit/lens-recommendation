@@ -19,8 +19,8 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://elegant-swan-810e36.netlify.app",  # ✅ Adding Netlify frontend domain
-    ],
+         "*"     
+    ], #"https://elegant-swan-810e36.netlify.app",  # Adding Netlify frontend domain
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -53,8 +53,8 @@ async def recommend_lens(payload: LensRequest):
                 name, age, contact_number, email_id, uses_glasses, consultation_freq, symptoms,
                 sleep_hours, hydration, screen_time, screen_break_time,
                 dark_mode, brightness, reading_time, outdoor_time,
-                diagnosed_conditions, family_history, preferences
-            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                diagnosed_conditions, family_history
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         
         cursor.execute(insert_query, (
             payload.name,
@@ -74,7 +74,6 @@ async def recommend_lens(payload: LensRequest):
             payload.outdoorTime,
             json.dumps(payload.diagnosedConditions),
             json.dumps(payload.familyHistory),
-            json.dumps(payload.preferences)
         ))
         conn.commit()
         form_id = cursor.lastrowid
