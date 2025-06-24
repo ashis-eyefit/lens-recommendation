@@ -86,10 +86,12 @@ async def recommend_lens(payload: LensRequest):
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_prompt},
             ],
-            temperature=0.7
+            temperature=0.7,
+            response_format="json"
         )
         content = gpt_output.choices[0].message.content.strip()
         try:
+            print("🔍 GPT Response:", content)
             result = json.loads(content)
             # fallback image logic
             lens_slug, coating_slug = resolve_dual_static_images(lens_file_name=result["lens_file_name"], coating_file_name=result["coating_file_name"])
@@ -101,11 +103,13 @@ async def recommend_lens(payload: LensRequest):
 
         except Exception as e:
             result = {
-                "lens_name": result["lens_name"],
+                "lens_name": "Normal Lens",
+                "lens_file_name": "Normal_Lens.jpg",
+                "coating_file_name": "Blue_Light_Protection.jpg",
+                "description": "Standard fallback lens recommendation due to system error.",
+                "benefits": "- Universal comfort\n- Blue light protection\n- Suitable for most needs",
                 "lens_image_url": "https://lens-recommendation.onrender.com/lens_image_folder/Normal_Lens.jpg",
-                "coating_image_url":"https://lens-recommendation.onrender.com/lens_image_folder/Blue_Light_Protection.jpg",
-                "description":result["description"],
-                "benefits": result["benefits"]
+                "coating_image_url": "https://lens-recommendation.onrender.com/lens_image_folder/Blue_Light_Protection.jpg"
             }
 
         #### debugging
