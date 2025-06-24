@@ -19,7 +19,7 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-         "https://eyefit-lens-recommendation.netlify.app"
+          "https://eyefit-lens-recommendation.netlify.app"
      ],                                                          # Adding Netlify frontend domain
     allow_credentials=True,
     allow_methods=["*"],
@@ -98,10 +98,11 @@ async def recommend_lens(payload: LensRequest):
             # Try all sources
             result["lens_image_url"] = f"https://lens-recommendation.onrender.com{lens_slug}"
             result["coating_image_url"] = f"https://lens-recommendation.onrender.com{coating_slug}"
-            
+            print("✅ Image slugs:", lens_slug, coating_slug)
 
 
         except Exception as e:
+            print("❌ Fallback triggered:", str(e))
             result = {
                 "lens_name": "Normal Lens",
                 "lens_file_name": "Normal_Lens.jpg",
