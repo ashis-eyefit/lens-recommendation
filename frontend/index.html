@@ -30,7 +30,7 @@
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      background-color: #a29f9f;
+      background-color: 679BA9;
       padding: 20px;
       display: flex;
       align-items: center;
@@ -488,6 +488,13 @@
 
 
         // Render textual result
+        const container = document.getElementById("lensImageContainer");
+      const imgMain = document.getElementById("lensImageMain");
+      const imgCoating = document.getElementById("lensImageCoating");
+
+      container.style.display = "block";
+      imgMain.src = window.latestLensImageURL_main;
+      imgCoating.src = window.latestLensImageURL_coating;
        document.getElementById("result").style.display = "block";
        document.getElementById("result").innerHTML = `
         <h3>🎯 Recommended Lens: ${result.lens_name}</h3>
