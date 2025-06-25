@@ -30,7 +30,7 @@
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      background-color: 679BA9;
+      background-color: rgb(127, 127, 130);
       padding: 20px;
       display: flex;
       align-items: center;
@@ -39,6 +39,7 @@
     .container {
       max-width: 700px;
       background: 679BA9;
+      background-color:679BA9 ;
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -488,47 +489,42 @@
 
 
         // Render textual result
-        const container = document.getElementById("lensImageContainer");
-      const imgMain = document.getElementById("lensImageMain");
-      const imgCoating = document.getElementById("lensImageCoating");
 
-      container.style.display = "block";
-      imgMain.src = window.latestLensImageURL_main;
-      imgCoating.src = window.latestLensImageURL_coating;
-       document.getElementById("result").style.display = "block";
-       document.getElementById("result").innerHTML = `
-        <h3>🎯 Recommended Lens: ${result.lens_name}</h3>
-        <p><strong>Description:</strong>${bulletToList(result.description)}</p>
-        <p><strong>Benefits:</strong>${bulletToList(result.benefits)}</p>
+        document.getElementById("result").style.display = "block";
+        document.getElementById("result").innerHTML = `
+          <h3>🎯 Recommended Lens: ${result.lens_name}</h3>
+          <p><strong>Description:</strong> ${bulletToList(result.description)}</p>
+          <p><strong>Benefits:</strong> ${bulletToList(result.benefits)}</p>
 
-        <div id="lensImageContainer" style="display: none; margin-top: 15px;">
-          <div style="display: flex; gap: 40px; align-items: flex-start;">
-            <div style="text-align: center;">
-              <h4>Lens Image</h4>
-              <img id="lensImageMain" src="" alt="Main Lens" style="max-width: 240px; border-radius: 6px;">
-            </div>
-            <div style="text-align: center;">
-              <h4>Coating Style (Transparent)</h4>
-              <img id="lensImageCoating" src="" alt="Coating" style="max-width: 240px; border-radius: 6px;">
+          <div id="lensImageContainer" style="margin-top: 20px;">
+            <div style="display: flex; gap: 40px; justify-content: center;">
+              <div style="text-align: center;">
+                <h4>Lens Image</h4>
+                <img src="${window.latestLensImageURL_main}" alt="Main Lens" style="max-width: 240px; border-radius: 6px;">
+              </div>
+              <div style="text-align: center;">
+                <h4>Coating Style (Transparent)</h4>
+                <img src="${window.latestLensImageURL_coating}" alt="Coating" style="max-width: 240px; border-radius: 6px;">
+              </div>
             </div>
           </div>
-        </div>
-      `;
-
-        //////////DEBUGGING PART
-        //console.log("Trying to show image from:", window.latestLensImageURL);
+        `;
 
 
-        statusDiv.innerHTML = "✅ Recommendation generated successfully.";
-        
-        
+                //////////DEBUGGING PART
+                //console.log("Trying to show image from:", window.latestLensImageURL);
 
-        } catch (err) {
-        statusDiv.innerHTML = "❌ Something went wrong. Kindly, check your input data.";
-        console.error(err);
-        }
-    });
-    });
+
+                statusDiv.innerHTML = "✅ Recommendation generated successfully.";
+                
+                
+
+                } catch (err) {
+                statusDiv.innerHTML = "❌ Something went wrong. Kindly, check your input data.";
+                console.error(err);
+                }
+            });
+            });
 
       /*function toggleImage() {
       const container = document.getElementById("lensImageContainer");
