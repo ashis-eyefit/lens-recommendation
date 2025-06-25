@@ -30,7 +30,7 @@
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      background-color: #dff1f4;
+      background-color: #a29f9f;
       padding: 20px;
       display: flex;
       align-items: center;
@@ -333,7 +333,7 @@
               </div>
               <div class="checkbox-item">
                   <input type="checkbox" id="cond12" name="diagnosedConditions" value="👶🩺 Retinopathy of Prematurity (ROP)(Retinal issues in premature babies)">
-                  <label for="cond12">👶🩺 Retinopathy of prematurity (ROP)(retinal issues in premature babies)</label>
+                  <label for="cond12">👶🩺 Retinopathy of prematurity (retinal issues in premature babies)</label>
               </div>
               <div class="checkbox-item">
                   <input type="checkbox" id="cond13" name="diagnosedConditions" value="🤧 Allergic Conjunctivitis (Eye allergy/redness/itching)">
@@ -488,23 +488,26 @@
 
 
         // Render textual result
-        document.getElementById("result").style.display = "block";
-        document.getElementById("result").innerHTML = `
-          <h3>🎯 Recommended Lens: ${result.lens_name}</h3>
-          <p><strong>Description:</strong>${bulletToList(result.description)}</p>
-          <p><strong>Benefits:</strong>${bulletToList(result.benefits)}</p>
-          <button onclick="toggleImage()" style="margin-top: 10px;">🖼️ Show Lens Image</button>
-          <div id="lensImageContainer" style="display: none; margin-top: 15px;">
-            <div>
-              <h3> Lens Image </h3>
-              <img id="lensImageMain" src="" alt="Main Lens" style="max-width: 240px; margin-right: 20px; border-radius: 6px;">
+       document.getElementById("result").style.display = "block";
+       document.getElementById("result").innerHTML = `
+        <h3>🎯 Recommended Lens: ${result.lens_name}</h3>
+        <p><strong>Description:</strong>${bulletToList(result.description)}</p>
+        <p><strong>Benefits:</strong>${bulletToList(result.benefits)}</p>
+
+        <div id="lensImageContainer" style="display: none; margin-top: 15px;">
+          <div style="display: flex; gap: 40px; align-items: flex-start;">
+            <div style="text-align: center;">
+              <h4>Lens Image</h4>
+              <img id="lensImageMain" src="" alt="Main Lens" style="max-width: 240px; border-radius: 6px;">
             </div>
-            <div>
-              <h3>Coating Style (Transparent)</h3>
+            <div style="text-align: center;">
+              <h4>Coating Style (Transparent)</h4>
               <img id="lensImageCoating" src="" alt="Coating" style="max-width: 240px; border-radius: 6px;">
             </div>
           </div>
-        `;
+        </div>
+      `;
+
         //////////DEBUGGING PART
         //console.log("Trying to show image from:", window.latestLensImageURL);
 
@@ -520,7 +523,7 @@
     });
     });
 
-      function toggleImage() {
+      /*function toggleImage() {
       const container = document.getElementById("lensImageContainer");
       const imgMain = document.getElementById("lensImageMain");
       const imgCoating = document.getElementById("lensImageCoating");
@@ -528,7 +531,7 @@
       container.style.display = "block";
       imgMain.src = window.latestLensImageURL_main;
       imgCoating.src = window.latestLensImageURL_coating;
-    }
+    }*/
     // Utility to convert "-" bullet text string into HTML list
     function bulletToList(text) {
       return `<ul>` + text
