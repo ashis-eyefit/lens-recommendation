@@ -57,7 +57,7 @@ async def recommend_lens(payload: LensRequest):
             ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """
         
-        await cursor.execute(insert_query, (
+        cursor.execute(insert_query, (
             payload.name,
             payload.age,
             payload.contactNumber,
