@@ -148,12 +148,17 @@ async def recommend_lens(payload: LensRequest):
         
     except Exception as e:
         return {
-            "image_url": "Fail to generate image",
-            "description": "Failed to generate lens recommendation.",
-            "error": str(e)
+            "lens_name": "Normal Lens",
+            "lens_file_name": "Normal_Lens.jpg",
+            "coating_file_name": "Blue_Light_Protection.jpg",
+            "description": "Standard fallback lens recommendation due to system error. Kindly, refresh and enter the data again.",
+            "benefits": "- Universal comfort\n- Blue light protection\n- Suitable for most needs",
+            "lens_image_url": "https://lens-recommendation.onrender.com/lens_image_folder/Normal_Lens.jpg",
+            "coating_image_url": "https://lens-recommendation.onrender.com/lens_image_folder/Blue_Light_Protection.jpg"
         }
-    """finally:
+
+    finally:
         cursor.close()
         conn.close()
-"""
+
     return result
