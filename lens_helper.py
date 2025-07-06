@@ -41,6 +41,7 @@ def generate_system_prompt():
 
         RULES:
         - Choose the most clinically suitable **lens_name** [with required coating] based on symptoms, age, screen time, vision history, and risk factors.
+        - In the description and benefits, do NOT use any "-" (hyphen) within sentences or compound words. Use spaces instead (e.g., write "anti reflective" instead of "anti-reflective"). Hyphens must only be used at the beginning of each bullet point.
         - If you cannot match any known lens type, fallback to: `"lens_file_name": "Normal_Lens.jpg"`
         - If coating not clear, fallback to: `"coating_file_name": "Blue_Light_Protection.jpg"`
         - Keep image filenames exactly as shown. Case-sensitive. No spaces.
@@ -56,6 +57,6 @@ def generate_system_prompt():
                             - ideal for age-related focus changes.",
             "benefits": "- No need for multiple glasses
                          - Natural transition for near to far
-                         - Anti-reflective coating improves night driving"
+                         - Anti reflective coating improves night driving"
             }}
         """

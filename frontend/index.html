@@ -468,8 +468,7 @@
             diagnosedConditions: getCheckboxValues("diagnosed-checkboxes", "diagnosed-other-checkbox", "diagnosed-other-text"),
             familyHistory: getCheckboxValues("parent-diagnosed-checkboxes", "parent-other-checkbox", "parent-other-text"),
         };
-        // Debugging in console output
-        //console.log("Sending data:", data);
+       
 
         const response = await fetch("https://lens-recommendation.onrender.com/recommend", {
             method: "POST",
@@ -511,30 +510,16 @@
         `;
 
 
-                //////////DEBUGGING PART
-                //console.log("Trying to show image from:", window.latestLensImageURL);
-
-
                 statusDiv.innerHTML = "✅ Recommendation generated successfully.";
                 
                 
 
                 } catch (err) {
                 statusDiv.innerHTML = "❌ Something went wrong. Kindly, check your input data.";
-                console.error(err);
                 }
             });
             });
 
-      /*function toggleImage() {
-      const container = document.getElementById("lensImageContainer");
-      const imgMain = document.getElementById("lensImageMain");
-      const imgCoating = document.getElementById("lensImageCoating");
-
-      container.style.display = "block";
-      imgMain.src = window.latestLensImageURL_main;
-      imgCoating.src = window.latestLensImageURL_coating;
-    }*/
     // Utility to convert "-" bullet text string into HTML list
     function bulletToList(text) {
       return `<ul>` + text

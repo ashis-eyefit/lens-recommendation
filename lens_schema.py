@@ -1,11 +1,11 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from typing import List, Optional
 
 class LensRequest(BaseModel):
     name: str
     age: int
     contactNumber: str
-    emailID: str
+    emailID: EmailStr
     usesGlassesOrContacts: str
     consultationFrequency: str
     symptoms: Optional[List[str]]

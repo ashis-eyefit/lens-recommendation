@@ -43,20 +43,21 @@ def get_db_connection():
 # === API Route ===
 @app.post("/recommend", response_model=LensResponse)
 async def recommend_lens(payload: LensRequest):
-    #conn = get_db_connection()
-    #cursor = conn.cursor()
+    conn = get_db_connection()
+    cursor = conn.cursor()
 
     try:
-        """
-        insert_query = 
+        
+        insert_query = """
             INSERT INTO lens_recommendation_user_data (
                 name, age, contact_number, email_id, uses_glasses, consultation_freq, symptoms,
                 sleep_hours, hydration, screen_time, screen_break_time,
                 dark_mode, brightness, reading_time, outdoor_time,
                 diagnosed_conditions, family_history
             ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """
         
-        cursor.execute(insert_query, (
+        await cursor.execute(insert_query, (
             payload.name,
             payload.age,
             payload.contactNumber,
@@ -77,7 +78,7 @@ async def recommend_lens(payload: LensRequest):
         ))
         conn.commit()
         form_id = cursor.lastrowid
-        """
+        
         user_prompt = generate_user_prompt(payload)
         system_prompt = generate_system_prompt()
         gpt_output = client.chat.completions.create(
@@ -86,22 +87,22 @@ async def recommend_lens(payload: LensRequest):
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_prompt},
             ],
-            temperature=0.7,
+            temperature=0.5,
           
         )
         content = gpt_output.choices[0].message.content.strip()
         try:
             import re
-            # STEP 1: Remove ```json or ``` wrappers
+            # Remove ```json or ``` wrappers
             if content.startswith("```json"):
                 content = content.replace("```json", "").strip("`").strip()
             elif content.startswith("```"):
                 content = content.strip("`").strip()
 
-            # STEP 2: Remove leading indentation
+            # Remove leading indentation
             content = re.sub(r'^\s+', '', content, flags=re.MULTILINE)
 
-            # STEP 3: Escape all raw newlines between quotes (💡 safest)
+            # Escape all raw newlines between quotes (safest)
             def escape_newlines_in_strings(text):
                 def replacer(match):
                     return match.group(0).replace('\n', '\\n')
@@ -109,40 +110,33 @@ async def recommend_lens(payload: LensRequest):
 
             content = escape_newlines_in_strings(content)
 
-            # STEP 4: Debug
-            print("🧼 Final cleaned content before JSON parse:\n", content)
-
-            # STEP 5: Parse
+            
+            # Parse
             result = json.loads(content)
             # fallback image logic
             lens_slug, coating_slug = resolve_dual_static_images(lens_file_name=result["lens_file_name"], coating_file_name=result["coating_file_name"])
             # Try all sources
             result["lens_image_url"] = f"https://lens-recommendation.onrender.com{lens_slug}"
             result["coating_image_url"] = f"https://lens-recommendation.onrender.com{coating_slug}"
-            print("✅ Image slugs:", lens_slug, coating_slug)
+            
 
 
         except Exception as e:
-            print("❌ Fallback triggered:", str(e))
             result = {
                 "lens_name": "Normal Lens",
                 "lens_file_name": "Normal_Lens.jpg",
                 "coating_file_name": "Blue_Light_Protection.jpg",
-                "description": "Standard fallback lens recommendation due to system error.",
+                "description": "Standard fallback lens recommendation due to system error. Kindly, refresh and enter the data again",
                 "benefits": "- Universal comfort\n- Blue light protection\n- Suitable for most needs",
                 "lens_image_url": "https://lens-recommendation.onrender.com/lens_image_folder/Normal_Lens.jpg",
                 "coating_image_url": "https://lens-recommendation.onrender.com/lens_image_folder/Blue_Light_Protection.jpg"
             }
 
-        #### debugging
-        #print(result["lens_image_url"])
-        #print("================")
-        #print(result["coating_image_url"])
-
-        """insert_response = 
+        insert_response = """
             INSERT INTO lens_recommendation_response (
                 form_id, lens_name, description, benefits
             ) VALUES (%s, %s, %s, %s)
+            """
         
         cursor.execute(insert_response, (
             form_id,
@@ -151,7 +145,7 @@ async def recommend_lens(payload: LensRequest):
             result['benefits']
         ))
         conn.commit()
-        """
+        
     except Exception as e:
         return {
             "image_url": "Fail to generate image",
